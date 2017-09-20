@@ -3,46 +3,68 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Code Corner</title>
+    <title>Code Home</title>
+
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
     <link rel="stylesheet" href="rows.css" />
 </head>
 
 <body>
     <div role="banner" id="banner" class="col-12">
         <h1>Code Home</h1>
-        <h3>Welcome to Code Home! This site can be used to gather information from several sites to learn about coding or any subject. </h3>
+        <h2>Welcome to Code Home! This site can be used to gather information from several sites to learn about web developement. </h2>
     </div>
-    <div id="selector" class="col-4">
-        <ul>
-            <li><img src="/images/HTML5_1Color_Black.png" alt="This is an image of the html5  logo"></li>
-            <li><img src="/images/css3.svg" alt="This is an image of the css3  logo"></li>
-            <li><img src="/images/javascript-logo-E967E87D74-seeklogo.com.png" alt="This is an image of the javascript  logo"></li>
-            <li><img src="/images/jquery.png" alt="This is an image of the jquery  logo"></li>
+    <div id="selector" class="col-3">
 
-            <li>
-                <h3>Click any of the images above or enter a subject</h3>
-                <form action=""><input type='text'>
-                    <input type="submit" value="Submit">
-                </form>
-            </li>
+        <h3>Select a subject from the menu.</h3>
+        <select id='menu'>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="javascript">Javascript</option>
+            <option value="jquery">Jquery</option>
+            <option value="Python">Python</option>
+            <option value="PHP">PHP</option>
+            <option value="Java">Java</option>
+            <option value="Ruby">Ruby</option>
+            <option value="Pearl">Pearl</option>
+            <option value="Object-C">Object-C</option>
+            <option value="SQL">SQL</option>
+            <option value="Microsoft .net">Microsoft .net</option>
+            <option value="Ruby on Rails">Ruby on Rails</option>
+            <option value="Bootstrap">Bootstrap</option>
+            <option value="Node.js">Node.js</option>
+            </select>
+          <input type="image" src='images/button.png' value='Submit' id='subButton'>
 
-        </ul>
+
     </div>
     <div id="content" class="col-6">
+        <h3> Select one of the resources below.</h3>
         <ul>
-            <li>
-                <img src="/images/youtubelogo.png" alt="This is an image of the You Tubelogo ">
-            </li>
-            <li><img src="/images/GoogleBookslogo.png" alt="This is an image of the Google Books Logo"></li>
-            <li><img src="/images/meetup.jpg" alt="This is an image of the Meetup Logo"></li>
+
+            <li><input type='image' src="/images/youtubelogo.png" alt="This is an image of the You Tubelogo " id='youTube' ><br>Youtube</li>
+            <li><input type='image' src="/images/GoogleBookslogo.png" alt="This is an image of the Google Books Logo" id='googleBooks' ><br>Google Books</li>
+            <li><input type='image' src="/images/meetup-wordmark-red.png" alt="This is an image of the Meetup Logo" id='meetUp' ><br>Meetup</li>
         </ul>
 
     </div>
-    <div id='results' class='col-6'>
+    <div class='col-12'>
+        <br>
+        <hr>
+    </div>
+    <div id='youTubeResults' class='col-12'>
+
 
     </div>
+    <div id='bookResults' class='col-12'>
 
+
+        </div>
+    </div>
+    <div id='meetUpResults' class='col-12'>
+
+    </div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="app.js"></script>
 </body>

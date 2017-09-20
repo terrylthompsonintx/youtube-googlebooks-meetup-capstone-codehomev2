@@ -7,7 +7,7 @@ As a user I want to understand how I can use the site.
 
 On load the user will see a banner explaining the site's purpose. 
 
-The user will be able to select from pre-made querys or enter a query of their own.  
+The user will be able to select from pre-made queries or enter a query of their own.  
 
 In the main section of the page the user will be able to push a button to select youtube, Google Books, or Meetup.  They can switch from any resource without having to enter a new query.   
 
