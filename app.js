@@ -6,7 +6,7 @@ When the user selects a resource the program displays its html and hides the oth
 
 /*Program global variables   */
 
-var  subject,userlat,userlong;
+var subject, userlat, userlong;
 const youTubeSearchApiUrl = "https://www.googleapis.com/youtube/v3/search";
 const googleBooksApiUrl = 'https://www.googleapis.com/books/v1/volumes';
 const meetUpApiUrl = 'http://api.meetup.com/2/groups';
@@ -14,12 +14,12 @@ const myGoogleKey = 'AIzaSyCHXrCpLMW0YYC6gQeu1jPxZZDwJwPEW3c';
 const myMeetUpKey = '284b5e217b2251643d681b7e516d3b56';
 
 
-/*These functions accept objects returned from API calls and build HTML Output */
-function displayYoutube(data){
+/*These functions accept objects returned from API calls and build HTML Output. */
+function displayYoutube(data) {
     var buildTheHtmlOutput = "";
     $.each(data.items, function (videosArrayKey, videosArrayValue) {
         buildTheHtmlOutput += "<div class='col-4'>";
-         //taget blank is going to open the video in a new window
+        //taget blank is going to open the video in a new window
         buildTheHtmlOutput += "<img src='" + videosArrayValue.snippet.thumbnails.high.url + "'/>"; //display video's thumbnail
         buildTheHtmlOutput += "<p>" + videosArrayValue.snippet.title + "</p>"; //output vide title
         buildTheHtmlOutput += "<a href='https://www.youtube.com/watch?v=" + videosArrayValue.id.videoId + "' target='_blank'><img src='/images/button.png'></a>";
@@ -28,76 +28,77 @@ function displayYoutube(data){
     $("#youTubeResults").html(buildTheHtmlOutput);
 };
 
-function displayGooglebooks(data){
-    var bookhtml='' ;
-    $.each(data.items, function (bookkey,bookvalue){
-        bookhtml+='<div class="col-4">'
-        bookhtml+='<img src = "' + bookvalue.volumeInfo.imageLinks.thumbnail + '">';
-        bookhtml+='<h3>' + bookvalue.volumeInfo.title + '</h3>';
-        bookhtml+='<p>' + bookvalue.volumeInfo.authors + '</p>';
-        bookhtml+='<a href="'+bookvalue.volumeInfo.previewLink + '" target="blank" ><img src="/images/button.png"></a>';
-        bookhtml+='</div>';
+function displayGooglebooks(data) {
+    var bookhtml = '';
+    $.each(data.items, function (bookkey, bookvalue) {
+        bookhtml += '<div class="col-4">'
+        bookhtml += '<img src = "' + bookvalue.volumeInfo.imageLinks.thumbnail + '">';
+        bookhtml += '<h3>' + bookvalue.volumeInfo.title + '</h3>';
+        bookhtml += '<p>' + bookvalue.volumeInfo.authors + '</p>';
+        bookhtml += '<a href="' + bookvalue.volumeInfo.previewLink + '" target="blank" ><img src="/images/button.png"></a>';
+        bookhtml += '</div>';
     });
     $('#bookResults').html(bookhtml);
 };
 
-function displayMeetup(data){
-    var meetUpHtml='';
-    $.each(data.results, function (key,value){
-        meetUpHtml+='<div class="col-4">';
+function displayMeetup(data) {
+    var meetUpHtml = '';
+    $.each(data.results, function (key, value) {
+        meetUpHtml += '<div class="col-4">';
         if (value.group_photo) {
-                        if (value.group_photo.highres_link.length > 0) {
-                            meetUpHtml += '<img src = "' + value.group_photo.photo_link + '">';
-                        }
-                    } else {
-                        meetUpHtml += '<img src = "images/meetup.png"/>';
-                    }
-        meetUpHtml+= '<h3>' + value.name + '</h3>';
-        meetUpHtml+= '<a href="' + value.link + '" target = "blank" class="infoButton btn btn-default" role="button"><img src="/images/button.png"></a>';
-        meetUpHtml+='</div>';
+            if (value.group_photo.highres_link.length > 0) {
+                meetUpHtml += '<img src = "' + value.group_photo.photo_link + '">';
+            }
+        } else {
+            meetUpHtml += '<img src = "images/meetup.png"/>';
+        }
+        meetUpHtml += '<h3>' + value.name + '</h3>';
+        meetUpHtml += '<a href="' + value.link + '" target = "blank" class="infoButton btn btn-default" role="button"><img src="/images/button.png"></a>';
+        meetUpHtml += '</div>';
     });
     $('#meetUpResults').html(meetUpHtml);
 };
 
 /* These functions accept a search term, API url, and API key.  They then call the API and pass the data to the display functions.  */
-function callGoogleBooks(subject,googleBooksApiUrl,myGoogleKey){
+function callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey) {
     var query = {
         q: subject,
         maxResults: 12,
         key: myGoogleKey
     };
     var data = $.ajax({
-        /* update API end point */
-        url: googleBooksApiUrl,
-        data: query,
-        dataType: "json",
-        /*set the call type GET / POST*/
-        type: "GET"
-    })
-    .done(function (result) {
-        /*console.log(result);*/
-        displayGooglebooks(result);
-        /* if the results are meeningful, we can just console.log them */
-    })
-    /* if the call is NOT successful show errors */
-    .fail(function (jqXHR, error, errorThrown) {
-        console.log(jqXHR);
-        console.log(error);
-        console.log(errorThrown);
-    });
+            /* update API end point */
+            url: googleBooksApiUrl,
+            data: query,
+            dataType: "json",
+            /*set the call type GET / POST*/
+            type: "GET"
+        })
+        .done(function (result) {
+            /*console.log(result);*/
+            displayGooglebooks(result);
+            /* if the results are meeningful, we can just console.log them */
+        })
+        /* if the call is NOT successful show errors */
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
 };
 
-function callYouTube(subject,youTubeSearchApiUrl,myGoogleKey){
+function callYouTube(subject, youTubeSearchApiUrl, myGoogleKey) {
     var query = {
         type: 'video',
         part: 'snippet',
         maxResults: 12,
         key: myGoogleKey,
-        q: subject }
+        q: subject
+    }
     $.getJSON(youTubeSearchApiUrl, query, displayYoutube);
 };
 
-function callMeetup(subject,meetUpApiUrl,myMeetUpKey){
+function callMeetup(subject, meetUpApiUrl, myMeetUpKey) {
 
     var params = {
         sign: 'true',
@@ -109,37 +110,35 @@ function callMeetup(subject,meetUpApiUrl,myMeetUpKey){
     };
 
     var result = $.ajax({
-        /* update API end point */
-        url: "http://api.meetup.com/2/groups",
-        data: params,
-        dataType: "jsonp",
-        /*set the call type GET / POST*/
-        type: "GET"
-    })
-    /* if the call is successful (status 200 OK) show results */
-    .done(function (result) {
-        console.log(result);
-        displayMeetup (result);
-        /* if the results are meeningful, we can just console.log them */
-    })
-    /* if the call is NOT successful show errors */
-    .fail(function (jqXHR, error, errorThrown) {
-        console.log(jqXHR);
-        console.log(error);
-        console.log(errorThrown);
-    });
+            /* update API end point */
+            url: "http://api.meetup.com/2/groups",
+            data: params,
+            dataType: "jsonp",
+            /*set the call type GET / POST*/
+            type: "GET"
+        })
+        /* if the call is successful (status 200 OK) show results */
+        .done(function (result) {
+            console.log(result);
+            displayMeetup(result);
+            /* if the results are meeningful, we can just console.log them */
+        })
+        /* if the call is NOT successful show errors */
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
 };
 
 
 /*Gets the user lat and long for the meetup API */
-navigator.geolocation.getCurrentPosition(function(position,userlat,userlong)
-    {
-    userLat= position.coords.latitude;
-    userLong= position.coords.longitude;
+navigator.geolocation.getCurrentPosition(function (position, userlat, userlong) {
+    userLat = position.coords.latitude;
+    userLong = position.coords.longitude;
 });
 
 /*Hides the output screens until the user selects one. */
-$('#youTubeResults').hide();
 $('#bookResults').hide();
 $('#meetUpResults').hide();
 
@@ -161,9 +160,9 @@ $('#meetUp').click(function () {
 });
 
 /* Event handler that gets the subject the user wants and calls the functions that contact the respective API */
-$("#subButton").on("click", function (event,userLat,userLong) {
+$("#subButton").on("click", function (event, userLat, userLong) {
     subject = $('#menu').val();
-    callGoogleBooks(subject,googleBooksApiUrl,myGoogleKey);
-    callYouTube(subject,youTubeSearchApiUrl,myGoogleKey);
-    callMeetup(subject,meetUpApiUrl,myMeetUpKey,userLat,userLong);
+    callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey);
+    callYouTube(subject, youTubeSearchApiUrl, myGoogleKey);
+    callMeetup(subject, meetUpApiUrl, myMeetUpKey, userLat, userLong);
 });

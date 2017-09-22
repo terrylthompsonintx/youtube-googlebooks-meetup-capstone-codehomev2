@@ -6,19 +6,22 @@
     <title>Code Home</title>
 
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
     <link rel="stylesheet" href="rows.css" />
 </head>
 
 <body>
-    <div role="banner" id="banner" class="col-12">
+    <header role="banner" id="banner" class="col-12">
         <h1>Code Home</h1>
-        <h2>Welcome to Code Home! This site can be used to gather information from several sites to learn about web developement. </h2>
-    </div>
-    <div id="selector" class="col-3">
+        <h2>Search for a web devlopement subject on YouTube, GoogleBooks, and MeetUp </h2>
+    </header>
+    <section class="row">
+        <div id="selector" class="col-6">
 
-        <h3>Select a subject from the menu.</h3>
-        <select id='menu'>
+            <h3>Search for term.</h3>
+            <select id='menu'>
             <option value="html">HTML</option>
             <option value="css">CSS</option>
             <option value="javascript">Javascript</option>
@@ -35,36 +38,39 @@
             <option value="Bootstrap">Bootstrap</option>
             <option value="Node.js">Node.js</option>
             </select>
-          <input type="image" src='images/button.png' value='Submit' id='subButton'>
-
-
-    </div>
-    <div id="content" class="col-6">
-        <h3> Select one of the resources below.</h3>
-        <ul>
-
-            <li><input type='image' src="/images/youtubelogo.png" alt="This is an image of the You Tubelogo " id='youTube' ><br>Youtube</li>
-            <li><input type='image' src="/images/GoogleBookslogo.png" alt="This is an image of the Google Books Logo" id='googleBooks' ><br>Google Books</li>
-            <li><input type='image' src="/images/meetup-wordmark-red.png" alt="This is an image of the Meetup Logo" id='meetUp' ><br>Meetup</li>
-        </ul>
-
-    </div>
-    <div class='col-12'>
-        <br>
-        <hr>
-    </div>
-    <div id='youTubeResults' class='col-12'>
-
-
-    </div>
-    <div id='bookResults' class='col-12'>
+            <input type="image" src='images/button.png' value='Submit' id='subButton'>
 
 
         </div>
-    </div>
-    <div id='meetUpResults' class='col-12'>
+        <div id="content" class="col-6">
+            <h3> Select a resource.</h3>
+            <ul class='row'>
 
-    </div>
+                <li class='col-4'><input type='image' src="/images/youtubelogo.png" alt="This is an image of the You Tubelogo " id='youTube'><br>Youtube</li>
+                <li class='col-4'><input type='image' src="/images/Googlelogo.png" alt="This is an image of the Google Books Logo" id='googleBooks'><br>Google Books</li>
+                <li class='col-4'><input type='image' src="/images/meetup_logo.gif" alt="This is an image of the Meetup Logo" id='meetUp'><br>Meetup</li>
+            </ul>
+
+        </div>
+    </section>
+    <section class='col-12'>
+        <br>
+        <hr>
+    </section>
+    <section id='youTubeResults' class='col-12'>
+
+
+    </section>
+    <section id='bookResults' class='col-12'>
+
+
+    </section>
+
+    <section id='meetUpResults' class='col-12'>
+
+    </section>
+    <footer> &copy;Terry Thompson <a href="https://github.com/terrylthompsonintx">GitHub</a> <a href='mailto:TerryLThompsonintx@gmail.com'>TerryLThompsonInTx@gmail.com</a></footer>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="app.js"></script>
 </body>
