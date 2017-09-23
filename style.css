@@ -44,8 +44,6 @@ li {
     max-height: 300px;
 }
 
-.col-4 {}
-
 #youTubeResults .col-4 p {
     height: 42px;
     overflow-y: hidden;
