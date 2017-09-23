@@ -19,9 +19,9 @@ function displayYoutube(data) {
     var buildTheHtmlOutput = "";
     $.each(data.items, function (videosArrayKey, videosArrayValue) {
         buildTheHtmlOutput += "<div class='col-4'>";
-        //taget blank is going to open the video in a new window
-        buildTheHtmlOutput += "<img src='" + videosArrayValue.snippet.thumbnails.high.url + "'/>"; //display video's thumbnail
-        buildTheHtmlOutput += "<p>" + videosArrayValue.snippet.title + "</p>"; //output vide title
+
+        buildTheHtmlOutput += "<img class='stubImage'  src='" + videosArrayValue.snippet.thumbnails.high.url + "'/>"; //display video's thumbnail
+        buildTheHtmlOutput += "<p class='display'>" + videosArrayValue.snippet.title + "</p>"; //output vide title
         buildTheHtmlOutput += "<a href='https://www.youtube.com/watch?v=" + videosArrayValue.id.videoId + "' target='_blank'><img src='/images/button.png'></a>";
         buildTheHtmlOutput += "</div>";
     });
@@ -32,9 +32,10 @@ function displayGooglebooks(data) {
     var bookhtml = '';
     $.each(data.items, function (bookkey, bookvalue) {
         bookhtml += '<div class="col-4">'
-        bookhtml += '<img src = "' + bookvalue.volumeInfo.imageLinks.thumbnail + '">';
-        bookhtml += '<h3>' + bookvalue.volumeInfo.title + '</h3>';
-        bookhtml += '<p>' + bookvalue.volumeInfo.authors + '</p>';
+        bookhtml += '<img class="stubImage" src = "' + bookvalue.volumeInfo.imageLinks.thumbnail + '">';
+        bookhtml += '<p class="display">' + bookvalue.volumeInfo.title + '<br>' +
+            bookvalue.volumeInfo.authors + '</p>';
+        //bookhtml += '<p class="display">' + bookvalue.volumeInfo.authors + '</p>';//
         bookhtml += '<a href="' + bookvalue.volumeInfo.previewLink + '" target="blank" ><img src="/images/button.png"></a>';
         bookhtml += '</div>';
     });
@@ -45,14 +46,17 @@ function displayMeetup(data) {
     var meetUpHtml = '';
     $.each(data.results, function (key, value) {
         meetUpHtml += '<div class="col-4">';
+        meetUpHtml += '<div class="imageArea">';
         if (value.group_photo) {
             if (value.group_photo.highres_link.length > 0) {
-                meetUpHtml += '<img src = "' + value.group_photo.photo_link + '">';
+                meetUpHtml += '<img class="stubImage"  src = "' + value.group_photo.photo_link + '">';
             }
         } else {
-            meetUpHtml += '<img src = "images/meetup.png"/>';
+            meetUpHtml += '<img class="stubImage"  src = "images/meetup.png"/>';
         }
-        meetUpHtml += '<h3>' + value.name + '</h3>';
+        meetUpHtml += '</div>'
+        meetUpHtml += '<p class="display">' + value.name + '</p>';
+
         meetUpHtml += '<a href="' + value.link + '" target = "blank" class="infoButton btn btn-default" role="button"><img src="/images/button.png"></a>';
         meetUpHtml += '</div>';
     });

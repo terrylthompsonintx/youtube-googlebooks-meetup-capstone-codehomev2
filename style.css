@@ -1,7 +1,12 @@
-body {
-    background-image: url("/images/background2.jpg");
-    background-repeat: no-repeat;
+html {
+    background: rgba(0, 0, 0, 0) url("../images/background2.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
+}
+
+body {
     color: white;
     text-align: center;
     font-family: 'Roboto', sans-serif;
@@ -16,10 +21,13 @@ header h1 {
     font-weight: bold;
 }
 
-#content input {}
-
 li img {
     width: 150px
+}
+
+.imageArea {
+    min-height: 60%;
+    max-height: 60%;
 }
 
 #subButton {
@@ -40,13 +48,11 @@ li {
     list-style-type: none;
 }
 
-.col-4 img {
-    max-height: 300px;
+.stubImage {
+    max-width: 95%;
 }
 
-.col-4 {}
-
-#youTubeResults .col-4 p {
+.display {
     height: 42px;
     overflow-y: hidden;
 }
