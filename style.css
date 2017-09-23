@@ -52,7 +52,11 @@ li {
     max-width: 95%;
 }
 
+<<<<<<< HEAD
 .display {
+=======
+#youTubeResults .col-4 p {
+>>>>>>> 10276472bcb974ead329b78e2974927608695554
     height: 42px;
     overflow-y: hidden;
 }
