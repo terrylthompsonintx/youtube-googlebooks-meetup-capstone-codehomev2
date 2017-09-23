@@ -57,7 +57,7 @@ function displayMeetup(data) {
         meetUpHtml += '</div>'
         meetUpHtml += '<p class="display">' + value.name + '</p>';
 
-        meetUpHtml += '<a href="' + value.link + '" target = "blank" class="infoButton btn btn-default" role="button"><img src="/images/button.png"></a>';
+        meetUpHtml += '<a href="' + value.link + '" target = "blank" class="infoButton btn btn-default" role="button"><img src="images/button.png"></a>';
         meetUpHtml += '</div>';
     });
     $('#meetUpResults').html(meetUpHtml);
