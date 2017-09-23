@@ -1,15 +1,15 @@
 # CodeHome
 Thinkful (https://www.thinkful.com) API Capstone Project using the  YouTube, Google Books and Meetup APIs
 
-![landing page](https://github.com/Kendallyn/capstone-national-parks-nps/blob/master/public/assets/img/github-readme-img/landingPage.png)
+![landing page](https://github.com/terrylthompsonintx/youtube-googlebooks-meetup-learn-coding-capstone/blob/master/github-images/landingpage.PNG)
 
-![park search page](https://github.com/Kendallyn/capstone-national-parks-nps/blob/master/public/assets/img/github-readme-img/parkSearchPage.png)
+![search page](https://github.com/terrylthompsonintx/youtube-googlebooks-meetup-learn-coding-capstone/blob/master/github-images/select.png)
 
-![results section](https://github.com/Kendallyn/capstone-national-parks-nps/blob/master/public/assets/img/github-readme-img/searchResults.png)
+![ YouTube results section](https://github.com/terrylthompsonintx/youtube-googlebooks-meetup-learn-coding-capstone/blob/master/github-images/Youtube.PNG)
 
-![bucket list section](https://github.com/Kendallyn/capstone-national-parks-nps/blob/master/public/assets/img/github-readme-img/bucketListSection.png)
+![GoogleBooks section](https://github.com/terrylthompsonintx/youtube-googlebooks-meetup-learn-coding-capstone/blob/master/github-images/googlebooks.PNG)
 
-![been there section](https://github.com/Kendallyn/capstone-national-parks-nps/blob/master/public/assets/img/github-readme-img/beenThereSection.png)
+![Meetup section](https://github.com/terrylthompsonintx/youtube-googlebooks-meetup-learn-coding-capstone/blob/master/github-images/meetup.PNG)
 
 ## Background
 The page is a one stop site where the user can learn about a subject either through Youtube or to search Google Books for books on that subject or find a Meetup.
@@ -52,4 +52,4 @@ This is v1.0 of the app, but future enhancements are expected to include:
 * Embedding content in the lower section of screen. I.E.  the user selects an item and instead of opening in a new tab, it opens in the lower section of page.
 * Pagination of returns; currently there is a limited number of displayed returns regardless of how many are returned from API.   Ideally
   if there are more returns than one page, the user can select to go to the next set of returns.
-* Add an option for the user to enter a query rather than to select a pre-existing one.
+* Add an option for the user to enter a query as an alternative to selecting a pre-existing one.
