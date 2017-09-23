@@ -32,11 +32,11 @@ function displayGooglebooks(data) {
     var bookhtml = '';
     $.each(data.items, function (bookkey, bookvalue) {
         bookhtml += '<div class="col-4">'
-        bookhtml += '<img class="stubImage" src = "' + bookvalue.volumeInfo.imageLinks.thumbnail + '">';
+        bookhtml += '<img class="stubImage" src = "' + bookvalue.volumeInfo.imageLinks.thumbnail.replace("http:", "https:") + '">';
         bookhtml += '<p class="display">' + bookvalue.volumeInfo.title + '<br>' +
             bookvalue.volumeInfo.authors + '</p>';
         //bookhtml += '<p class="display">' + bookvalue.volumeInfo.authors + '</p>';//
-        bookhtml += '<a href="' + bookvalue.volumeInfo.previewLink + '" target="blank" ><img src="images/button.png"></a>';
+        bookhtml += '<a href="' + bookvalue.volumeInfo.previewLink.replace("http:", "https:") + '" target="blank" ><img src="images/button.png"></a>';
         bookhtml += '</div>';
     });
     $('#bookResults').html(bookhtml);
