@@ -9,7 +9,7 @@ When the user selects a resource the program displays its html and hides the oth
 var subject, userlat, userlong;
 const youTubeSearchApiUrl = "https://www.googleapis.com/youtube/v3/search";
 const googleBooksApiUrl = 'https://www.googleapis.com/books/v1/volumes';
-const meetUpApiUrl = 'http://api.meetup.com/2/groups';
+const meetUpApiUrl = 'https://api.meetup.com/2/groups';
 const myGoogleKey = 'AIzaSyCHXrCpLMW0YYC6gQeu1jPxZZDwJwPEW3c';
 const myMeetUpKey = '284b5e217b2251643d681b7e516d3b56';
 
@@ -22,7 +22,7 @@ function displayYoutube(data) {
 
         buildTheHtmlOutput += "<img class='stubImage'  src='" + videosArrayValue.snippet.thumbnails.high.url + "'/>"; //display video's thumbnail
         buildTheHtmlOutput += "<p class='display'>" + videosArrayValue.snippet.title + "</p>"; //output vide title
-        buildTheHtmlOutput += "<a href='https://www.youtube.com/watch?v=" + videosArrayValue.id.videoId + "' target='_blank'><img src='/images/button.png'></a>";
+        buildTheHtmlOutput += "<a href='https://www.youtube.com/watch?v=" + videosArrayValue.id.videoId + "' target='_blank'><img src='images/button.png'></a>";
         buildTheHtmlOutput += "</div>";
     });
     $("#youTubeResults").html(buildTheHtmlOutput);
@@ -36,7 +36,7 @@ function displayGooglebooks(data) {
         bookhtml += '<p class="display">' + bookvalue.volumeInfo.title + '<br>' +
             bookvalue.volumeInfo.authors + '</p>';
         //bookhtml += '<p class="display">' + bookvalue.volumeInfo.authors + '</p>';//
-        bookhtml += '<a href="' + bookvalue.volumeInfo.previewLink + '" target="blank" ><img src="/images/button.png"></a>';
+        bookhtml += '<a href="' + bookvalue.volumeInfo.previewLink + '" target="blank" ><img src="images/button.png"></a>';
         bookhtml += '</div>';
     });
     $('#bookResults').html(bookhtml);
@@ -115,7 +115,7 @@ function callMeetup(subject, meetUpApiUrl, myMeetUpKey) {
 
     var result = $.ajax({
             /* update API end point */
-            url: "http://api.meetup.com/2/groups",
+            url: "https://api.meetup.com/2/groups",
             data: params,
             dataType: "jsonp",
             /*set the call type GET / POST*/
