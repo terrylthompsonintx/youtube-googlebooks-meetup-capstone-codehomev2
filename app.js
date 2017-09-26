@@ -21,8 +21,8 @@ function displayYoutube(data) {
         buildTheHtmlOutput += "<div class='col-4'>";
 
         buildTheHtmlOutput += "<img class='stubImage'  src='" + videosArrayValue.snippet.thumbnails.high.url + "'/>"; //display video's thumbnail
-        buildTheHtmlOutput += "<p class='display'>" + videosArrayValue.snippet.title + "</p>"; //output vide title
-        buildTheHtmlOutput += "<a href='https://www.youtube.com/watch?v=" + videosArrayValue.id.videoId + "' target='_blank'><img src='images/button.png'></a>";
+        buildTheHtmlOutput += "<p class='results'>" + videosArrayValue.snippet.title + '</p>'; //output vide title
+        buildTheHtmlOutput += "<a href='https://www.youtube.com/watch?v=" + videosArrayValue.id.videoId + "' target='_blank'><img src='images/button2.png'></a>";
         buildTheHtmlOutput += "</div>";
     });
     $("#youTubeResults").html(buildTheHtmlOutput);
@@ -31,12 +31,14 @@ function displayYoutube(data) {
 function displayGooglebooks(data) {
     var bookhtml = '';
     $.each(data.items, function (bookkey, bookvalue) {
-        bookhtml += '<div class="col-4">'
+        bookhtml += '<div class="col-4">';
+        bookhtml += '<div class="imageArea">';
         bookhtml += '<img class="stubImage" src = "' + bookvalue.volumeInfo.imageLinks.thumbnail.replace("http:", "https:") + '">';
-        bookhtml += '<p class="display">' + bookvalue.volumeInfo.title + '<br>' +
+        bookhtml += '<p class="results">' + bookvalue.volumeInfo.title + '<br>' +
             bookvalue.volumeInfo.authors + '</p>';
         //bookhtml += '<p class="display">' + bookvalue.volumeInfo.authors + '</p>';//
-        bookhtml += '<a href="' + bookvalue.volumeInfo.previewLink.replace("http:", "https:") + '" target="blank" ><img src="images/button.png"></a>';
+        bookhtml += '<a href="' + bookvalue.volumeInfo.previewLink.replace("http:", "https:") + '" target="blank" ><img src="images/button2.png"></a>';
+        bookhtml += '</div>';
         bookhtml += '</div>';
     });
     $('#bookResults').html(bookhtml);
@@ -44,22 +46,28 @@ function displayGooglebooks(data) {
 
 function displayMeetup(data) {
     var meetUpHtml = '';
-    $.each(data.results, function (key, value) {
-        meetUpHtml += '<div class="col-4">';
-        meetUpHtml += '<div class="imageArea">';
-        if (value.group_photo) {
-            if (value.group_photo.highres_link.length > 0) {
-                meetUpHtml += '<img class="stubImage"  src = "' + value.group_photo.photo_link + '">';
+    if (data.code != 'no_topics') {
+        $.each(data.results, function (key, value) {
+            meetUpHtml += '<div class="col-4">';
+            meetUpHtml += '<div class="imageArea">';
+            if (value.group_photo) {
+                if (value.group_photo.highres_link.length > 0) {
+                    meetUpHtml += '<img class="stubImage"  src = "' + value.group_photo.photo_link + '">';
+                }
+            } else {
+                meetUpHtml += '<img class="stubImage"  src = "images/meetup.png"/>';
             }
-        } else {
-            meetUpHtml += '<img class="stubImage"  src = "images/meetup.png"/>';
-        }
-        meetUpHtml += '</div>'
-        meetUpHtml += '<p class="display">' + value.name + '</p>';
+            meetUpHtml += '</div>'
+            meetUpHtml += '<p class="results">' + value.name + '</p>';
 
-        meetUpHtml += '<a href="' + value.link + '" target = "blank" class="infoButton btn btn-default" role="button"><img src="images/button.png"></a>';
+            meetUpHtml += '<a href="' + value.link + '" target = "blank" class="infoButton btn btn-default" role="button"><img src="images/button2.png"></a>';
+            meetUpHtml += '</div>';
+        });
+    } else {
+        meetUpHtml += '<div class="col-12">';
+        meetUpHtml += '<h2 class="errMeet">Sorry, there are no Meetups for that subject in your area. </hs>';
         meetUpHtml += '</div>';
-    });
+    }
     $('#meetUpResults').html(meetUpHtml);
 };
 

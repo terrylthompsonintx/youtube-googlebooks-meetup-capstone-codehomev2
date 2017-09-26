@@ -1,5 +1,5 @@
 html {
-    background: rgba(0, 0, 0, 0) url("images/background2.jpg") no-repeat center center fixed;
+    background: rgba(0, 0, 0, 0) url("images/background3.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -39,10 +39,6 @@ header h1 {
     font-weight: bold;
 }
 
-li img {
-    width: 150px
-}
-
 .imageArea {
     min-height: 447px;
 }
@@ -52,7 +48,7 @@ li img {
 }
 
 #content li input {
-    width: 100%
+    max-width: 100px;
 }
 
 #content li {
@@ -66,12 +62,15 @@ li {
 }
 
 .stubImage {
-    max-width: 95%;
+    padding-top: 20px;
+    max-width: 65%;
 }
 
-.display {}
+.display {
+    vertical-align: bottom;
+}
 
-#youTubeResults .col-4 p {
+.results {
     height: 42px;
     overflow-y: hidden;
 }
@@ -84,4 +83,12 @@ li {
     background-color: #6079a3;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
+}
+
+footer p {
+    padding-top: 40px;
+}
+
+.errMeet {
+    text-align: center;
 }
