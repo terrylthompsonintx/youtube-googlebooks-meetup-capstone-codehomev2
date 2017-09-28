@@ -28,19 +28,54 @@ function displayYoutube(data) {
     $("#youTubeResults").html(buildTheHtmlOutput);
 };
 
+
 function displayGooglebooks(data) {
+    console.log(data);
+
     var bookhtml = '';
     $.each(data.items, function (bookkey, bookvalue) {
-        bookhtml += '<div class="col-4">';
-        // bookhtml += '<div class="imageArea">';
-        bookhtml += '<div class = "stubImage" style="background-image: url(' + bookvalue.volumeInfo.imageLinks.thumbnail.replace("http:", "https:") + ')"></div>';
-        bookhtml += '<p class="results">' + bookvalue.volumeInfo.title + '<br>' +
-            bookvalue.volumeInfo.authors + '</p>';
-        //bookhtml += '<p class="display">' + bookvalue.volumeInfo.authors + '</p>';//
-        bookhtml += '<a href="' + bookvalue.volumeInfo.previewLink.replace("http:", "https:") + '" target="blank" ><img src="images/button2.png"></a>';
-        bookhtml += '</div>';
-        bookhtml += '</div>';
+        console.log("inside each", bookkey, bookvalue);
+        console.log("inside each", Object.keys(bookvalue.volumeInfo).length);
+
+        //if volumeInfo IS part of the output object
+        if (Object.keys(bookvalue.volumeInfo).length != 0) {
+            bookhtml += '<div class="col-4">';
+
+            if (bookvalue.volumeInfo.imageLinks !== undefined) {
+                console.log(bookvalue.volumeInfo.imageLinks.thumbnail);
+                bookhtml += '<div class = "stubImage" style="background-image: url(' + bookvalue.volumeInfo.imageLinks.thumbnail.replace("http:", "https:") + ')"></div>';
+            } else {
+                bookhtml += '<div class = "stubImage" style="background-image: url(images/googlelogo.png)"></div>';
+            };
+            bookhtml += '<p class="results">' + bookvalue.volumeInfo.title + '<br>' +
+                bookvalue.volumeInfo.authors + '</p>';
+            //bookhtml += '<p class="display">' + bookvalue.volumeInfo.authors + '</p>';//
+            bookhtml += '<a href="' + bookvalue.volumeInfo.previewLink.replace("http:", "https:") + '" target="blank" ><img src="images/button2.png"></a>';
+            bookhtml += '</div>';
+            bookhtml += '</div>';
+        }
+        //if volumeInfo is NOT part of the output object
+        else if (Object.keys(bookvalue.title).length != 0) {
+            bookhtml += '<div class="col-4">';
+            if (bookvalue.imageLinks !== undefined) {
+                console.log(bookvalue.imageLinks.thumbnail);
+                bookhtml += '<div class = "stubImage" style="background-image: url(' + bookvalue.imageLinks.thumbnail.replace("http:", "https:") + ')"></div>';
+            } else {
+                bookhtml += '<div class = "stubImage" style="background-image: url(images/googlelogo.png)"></div>';
+            };
+            bookhtml += '<p class="results">' + bookvalue.title + '<br>' +
+                bookvalue.authors + '</p>';
+            //bookhtml += '<p class="display">' + bookvalue.authors + '</p>';//
+            bookhtml += '<a href="' + bookvalue.previewLink.replace("http:", "https:") + '" target="blank" ><img src="images/button2.png"></a>';
+            bookhtml += '</div>';
+            bookhtml += '</div>';
+        }
+        //if there are not results
+        else {
+            bookhtml = '<p class="results">No results</p>';
+        }
     });
+
     $('#bookResults').html(bookhtml);
 };
 
@@ -67,7 +102,7 @@ function displayMeetup(data) {
         });
     } else {
         meetUpHtml += '<div class="col-12">';
-        meetUpHtml += '<h2 class="errMeet">Sorry, there are no Meetups for that subject in your area. </hs>';
+        meetUpHtml += '<h2 class="errMeet">Sorry, there are no Meetups for that subject in your area. </h2>';
         meetUpHtml += '</div>';
     }
     $('#meetUpResults').html(meetUpHtml);
@@ -98,6 +133,7 @@ function callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey) {
             console.log(jqXHR);
             console.log(error);
             console.log(errorThrown);
+
         });
 };
 
@@ -133,7 +169,7 @@ function callMeetup(subject, meetUpApiUrl, myMeetUpKey) {
         })
         /* if the call is successful (status 200 OK) show results */
         .done(function (result) {
-            console.log(result);
+
             displayMeetup(result);
             /* if the results are meeningful, we can just console.log them */
         })
