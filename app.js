@@ -30,19 +30,19 @@ function displayYoutube(data) {
 
 
 function displayGooglebooks(data) {
-    console.log(data);
+    //console.log(data);
 
     var bookhtml = '';
     $.each(data.items, function (bookkey, bookvalue) {
-        console.log("inside each", bookkey, bookvalue);
-        console.log("inside each", Object.keys(bookvalue.volumeInfo).length);
+        //console.log("inside each", bookkey, bookvalue);
+        //console.log("inside each", Object.keys(bookvalue.volumeInfo).length);
 
         //if volumeInfo IS part of the output object
         if (Object.keys(bookvalue.volumeInfo).length != 0) {
             bookhtml += '<div class="col-4">';
 
             if (bookvalue.volumeInfo.imageLinks !== undefined) {
-                console.log(bookvalue.volumeInfo.imageLinks.thumbnail);
+                //console.log(bookvalue.volumeInfo.imageLinks.thumbnail);
                 bookhtml += '<div class = "stubImage" style="background-image: url(' + bookvalue.volumeInfo.imageLinks.thumbnail.replace("http:", "https:") + ')"></div>';
             } else {
                 bookhtml += '<div class = "stubImage" style="background-image: url(images/googlelogo.png)"></div>';
@@ -148,7 +148,7 @@ function callYouTube(subject, youTubeSearchApiUrl, myGoogleKey) {
     $.getJSON(youTubeSearchApiUrl, query, displayYoutube);
 };
 
-function callMeetup(subject, meetUpApiUrl, myMeetUpKey) {
+function callMeetup(subject, meetUpApiUrl, myMeetUpKey, userlat, userlong) {
 
     var params = {
         sign: 'true',
@@ -186,12 +186,17 @@ function callMeetup(subject, meetUpApiUrl, myMeetUpKey) {
 navigator.geolocation.getCurrentPosition(function (position, userlat, userlong) {
     userLat = position.coords.latitude;
     userLong = position.coords.longitude;
+    console.log(userlat, userlong);
+
 });
+
+
+
 
 /*Hides the output screens until the user selects one. */
 $('#bookResults').hide();
 $('#meetUpResults').hide();
-
+//getLocation(userlat, userlong);
 /*Event handlers that displays the selected output screen and hides the others  */
 $('#youTube').click(function () {
     $('#youTubeResults').show();
@@ -214,5 +219,15 @@ $("#subButton").on("click", function (event, userLat, userLong) {
     subject = $('#menu').val();
     callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey);
     callYouTube(subject, youTubeSearchApiUrl, myGoogleKey);
-    callMeetup(subject, meetUpApiUrl, myMeetUpKey, userLat, userLong);
+    if ((userlat) && (userlong)) {
+        console.log(userLat);
+        callMeetup(subject, meetUpApiUrl, myMeetUpKey, userLat, userLong);
+
+
+    } else {
+        var err = '';
+        err += '<h3>Your Browser does not support HTML5 or you have not selected to allow the application access to your location.   The MeetUp API will not be able to return relevant data.</hr>';
+        $('#meetUpResults').html(err);
+    };
+
 });
