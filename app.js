@@ -7,12 +7,15 @@ When the user selects a resource the program displays its html and hides the oth
 /*Program global variables   */
 
 var subject, userlat, userlong;
+userlat = 0;
+userlong = 0;
 const youTubeSearchApiUrl = "https://www.googleapis.com/youtube/v3/search";
 const googleBooksApiUrl = 'https://www.googleapis.com/books/v1/volumes';
 const meetUpApiUrl = 'https://api.meetup.com/2/groups';
 const myGoogleKey = 'AIzaSyCHXrCpLMW0YYC6gQeu1jPxZZDwJwPEW3c';
 const myMeetUpKey = '284b5e217b2251643d681b7e516d3b56';
-
+const zipCodeApiKey = 'af2wdAYpTFprEQOgghsNf0eB31Awkcdurg1EQZ4KFtbkj0AAi2ox2C86DJCXVQsn';
+const zipCodeApiUrl = 'https://www.zipcodeapi.com/rest/'
 
 /*These functions accept objects returned from API calls and build HTML Output. */
 function displayYoutube(data) {
@@ -27,7 +30,6 @@ function displayYoutube(data) {
     });
     $("#youTubeResults").html(buildTheHtmlOutput);
 };
-
 
 function displayGooglebooks(data) {
     //console.log(data);
@@ -137,6 +139,25 @@ function callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey) {
         });
 };
 
+function getLocationZip(zipCodeApiUrl, zipCodeApiKey, userlat, userlong, userInputZip) {
+    var query = '';
+    var data;
+    query += zipCodeApiUrl;
+    query += zipCodeApiKey;
+
+    query += '/info.json/';
+    query += userInputZip;
+    query += '/degrees';
+    console.log(query);
+    $.getJSON(query, function (data) {
+        console.log(data);
+        userlat = data.lat;
+        userlong = data.lng;
+        console.log(userlat, userlong);
+    })
+
+}
+
 function callYouTube(subject, youTubeSearchApiUrl, myGoogleKey) {
     var query = {
         type: 'video',
@@ -196,22 +217,26 @@ navigator.geolocation.getCurrentPosition(function (position, userlat, userlong) 
 /*Hides the output screens until the user selects one. */
 $('#bookResults').hide();
 $('#meetUpResults').hide();
-//getLocation(userlat, userlong);
+//$('#zip').hide();
+
 /*Event handlers that displays the selected output screen and hides the others  */
 $('#youTube').click(function () {
     $('#youTubeResults').show();
     $('#bookResults').hide();
     $('#meetUpResults').hide();
+    //    $('#zip').hide();
 })
 $('#googleBooks').click(function () {
     $('#bookResults').show();
     $('#youTubeResults').hide();
     $('#meetUpResults').hide();
+    //   $('#zip').hide();
 })
 $('#meetUp').click(function () {
     $('#meetUpResults').show();
     $('#youTubeResults').hide();
     $('#bookResults').hide();
+    //  $('#zip').hide();
 });
 
 /* Event handler that gets the subject the user wants and calls the functions that contact the respective API */
@@ -225,9 +250,15 @@ $("#subButton").on("click", function (event, userLat, userLong) {
 
 
     } else {
-        var err = '';
-        err += '<h3>Your Browser does not support HTML5 or you have not selected to allow the application access to your location.   The MeetUp API will not be able to return relevant data.</hr>';
-        $('#meetUpResults').html(err);
+        $('#zip').show();
     };
 
+});
+$('#zipButton').on('click', function (subject, meetUpApiUrl, myMeetUpKey, userLat, userLong) {
+    var userInputZip = $('#zipcode').val();
+    console.log(userInputZip);
+    getLocationZip(zipCodeApiUrl, zipCodeApiKey, userlat, userlong, userInputZip);
+    //$('#zip').hide();
+
+    callMeetup(subject, meetUpApiUrl, myMeetUpKey, userLat, userLong);
 });
