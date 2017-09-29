@@ -149,12 +149,36 @@ function getLocationZip(zipCodeApiUrl, zipCodeApiKey, userlat, userlong, userInp
     query += userInputZip;
     query += '/degrees';
     console.log(query);
-    $.getJSON(query, function (data) {
-        console.log(data);
-        userlat = data.lat;
-        userlong = data.lng;
-        console.log(userlat, userlong);
-    })
+    var result = $.ajax({
+            /* update API end point */
+            //url: query,
+            url: 'https://www.zipcodeapi.com/rest/' + zipCodeApiKey + '/info.json/' + userInputZip + '/degrees',
+            //data: params,
+            dataType: "json",
+            /*set the call type GET / POST*/
+            type: "GET"
+        })
+        /* if the call is successful (status 200 OK) show results */
+        .done(function (data) {
+            console.log(data);
+            userlat = data.lat;
+            userlong = data.lng;
+            console.log(userlat, userlong);
+            //displayMeetup(result);
+            /* if the results are meeningful, we can just console.log them */
+        })
+        /* if the call is NOT successful show errors */
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+    /* $.getJSON(query, function (data) {
+         console.log(data);
+         userlat = data.lat;
+         userlong = data.lng;
+         console.log(userlat, userlong);
+     })*/
 
 }
 
