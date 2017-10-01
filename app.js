@@ -32,19 +32,19 @@ function displayYoutube(data) {
 };
 
 function displayGooglebooks(data) {
-    //console.log(data);
+    console.log(data);
 
     var bookhtml = '';
     $.each(data.items, function (bookkey, bookvalue) {
-        //console.log("inside each", bookkey, bookvalue);
-        //console.log("inside each", Object.keys(bookvalue.volumeInfo).length);
+        console.log("inside each", bookkey, bookvalue);
+        console.log("inside each", Object.keys(bookvalue.volumeInfo).length);
 
         //if volumeInfo IS part of the output object
         if (Object.keys(bookvalue.volumeInfo).length != 0) {
             bookhtml += '<div class="col-4">';
 
             if (bookvalue.volumeInfo.imageLinks !== undefined) {
-                //console.log(bookvalue.volumeInfo.imageLinks.thumbnail);
+                console.log(bookvalue.volumeInfo.imageLinks.thumbnail);
                 bookhtml += '<div class = "stubImage" style="background-image: url(' + bookvalue.volumeInfo.imageLinks.thumbnail.replace("http:", "https:") + ')"></div>';
             } else {
                 bookhtml += '<div class = "stubImage" style="background-image: url(images/googlelogo.png)"></div>';
@@ -193,7 +193,7 @@ function callYouTube(subject, youTubeSearchApiUrl, myGoogleKey) {
     $.getJSON(youTubeSearchApiUrl, query, displayYoutube);
 };
 
-function callMeetup(subject, meetUpApiUrl, myMeetUpKey, userlat, userlong) {
+function callMeetup(subject, meetUpApiUrl, myMeetUpKey) {
 
     var params = {
         sign: 'true',
@@ -231,17 +231,15 @@ function callMeetup(subject, meetUpApiUrl, myMeetUpKey, userlat, userlong) {
 navigator.geolocation.getCurrentPosition(function (position, userlat, userlong) {
     userLat = position.coords.latitude;
     userLong = position.coords.longitude;
-    console.log(userlat, userlong);
-
 });
-
-
-
 
 /*Hides the output screens until the user selects one. */
 $('#bookResults').hide();
 $('#meetUpResults').hide();
+<<<<<<< HEAD
 //$('#zip').hide();
+=======
+>>>>>>> parent of b9d400c... Added error handling for Geolocation
 
 /*Event handlers that displays the selected output screen and hides the others  */
 $('#youTube').click(function () {
@@ -268,6 +266,7 @@ $("#subButton").on("click", function (event, userLat, userLong) {
     subject = $('#menu').val();
     callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey);
     callYouTube(subject, youTubeSearchApiUrl, myGoogleKey);
+<<<<<<< HEAD
     if ((userlat) && (userlong)) {
         console.log(userLat);
         callMeetup(subject, meetUpApiUrl, myMeetUpKey, userLat, userLong);
@@ -277,6 +276,9 @@ $("#subButton").on("click", function (event, userLat, userLong) {
         $('#zip').show();
     };
 
+=======
+    callMeetup(subject, meetUpApiUrl, myMeetUpKey, userLat, userLong);
+>>>>>>> parent of b9d400c... Added error handling for Geolocation
 });
 $('#zipButton').on('click', function (subject, meetUpApiUrl, myMeetUpKey, userLat, userLong) {
     var userInputZip = $('#zipcode').val();
