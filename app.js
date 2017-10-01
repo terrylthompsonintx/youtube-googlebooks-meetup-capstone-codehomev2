@@ -12,7 +12,7 @@ userlong = 0;
 var options = {
     enableHighAccuracy: true,
     timeout: 5000,
-    maximumAge: 0
+    maximumAge: 3
 };
 const youTubeSearchApiUrl = "https://www.googleapis.com/youtube/v3/search";
 const googleBooksApiUrl = 'https://www.googleapis.com/books/v1/volumes';
@@ -48,7 +48,7 @@ function displayGooglebooks(data) {
             bookhtml += '<div class="col-4">';
 
             if (bookvalue.volumeInfo.imageLinks !== undefined) {
-                console.log(bookvalue.volumeInfo.imageLinks.thumbnail);
+                //console.log(bookvalue.volumeInfo.imageLinks.thumbnail);
                 bookhtml += '<div class = "stubImage" style="background-image: url(' + bookvalue.volumeInfo.imageLinks.thumbnail.replace("http:", "https:") + ')"></div>';
             } else {
                 bookhtml += '<div class = "stubImage" style="background-image: url(images/googlelogo.png)"></div>';
@@ -64,7 +64,7 @@ function displayGooglebooks(data) {
         else if (Object.keys(bookvalue.title).length != 0) {
             bookhtml += '<div class="col-4">';
             if (bookvalue.imageLinks !== undefined) {
-                console.log(bookvalue.imageLinks.thumbnail);
+                //console.log(bookvalue.imageLinks.thumbnail);
                 bookhtml += '<div class = "stubImage" style="background-image: url(' + bookvalue.imageLinks.thumbnail.replace("http:", "https:") + ')"></div>';
             } else {
                 bookhtml += '<div class = "stubImage" style="background-image: url(images/googlelogo.png)"></div>';
@@ -189,18 +189,19 @@ function callMeetup(subject, meetUpApiUrl, myMeetUpKey) {
         });
 };
 
+//Success call of geolocation, calls the Meetup API.
 function geoSuccess(position) {
-    console.log(position);
+    //console.log(position);
     userlat = position.coords.latitude;
     userlong = position.coords.longitude;
-    console.log(userlat, userlong);
+    //console.log(userlat, userlong);
     callMeetup(subject, meetUpApiUrl, myMeetUpKey, userlat, userlong);
 }
-
+//Fail of geolocation.
 function geoFail() {
     $('#meetUpResults').html('<h3>Sorry, your browser does not support HTML5, you selected to not allow the app to have your location, or the API timed out.  Meetup will not be able to return relevant events. </h3>');
 };
-/*Gets the user lat and long for the meetup API */
+
 
 
 /*Hides the output screens until the user selects one. */
@@ -236,6 +237,5 @@ $("#subButton").on("click", function (event, userLat, userLong) {
     navigator.geolocation.getCurrentPosition(geoSuccess, geoFail, options);
 
 
-    // } else {
 
 });
