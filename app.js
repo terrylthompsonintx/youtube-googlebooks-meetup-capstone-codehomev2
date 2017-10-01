@@ -9,13 +9,17 @@ When the user selects a resource the program displays its html and hides the oth
 var subject, userlat, userlong;
 userlat = 0;
 userlong = 0;
+var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+};
 const youTubeSearchApiUrl = "https://www.googleapis.com/youtube/v3/search";
 const googleBooksApiUrl = 'https://www.googleapis.com/books/v1/volumes';
 const meetUpApiUrl = 'https://api.meetup.com/2/groups';
 const myGoogleKey = 'AIzaSyCHXrCpLMW0YYC6gQeu1jPxZZDwJwPEW3c';
 const myMeetUpKey = '284b5e217b2251643d681b7e516d3b56';
-const zipCodeApiKey = 'af2wdAYpTFprEQOgghsNf0eB31Awkcdurg1EQZ4KFtbkj0AAi2ox2C86DJCXVQsn';
-const zipCodeApiUrl = 'https://www.zipcodeapi.com/rest/'
+
 
 /*These functions accept objects returned from API calls and build HTML Output. */
 function displayYoutube(data) {
@@ -32,12 +36,12 @@ function displayYoutube(data) {
 };
 
 function displayGooglebooks(data) {
-    console.log(data);
+
 
     var bookhtml = '';
     $.each(data.items, function (bookkey, bookvalue) {
-        console.log("inside each", bookkey, bookvalue);
-        console.log("inside each", Object.keys(bookvalue.volumeInfo).length);
+        //console.log("inside each", bookkey, bookvalue);
+        //console.log("inside each", Object.keys(bookvalue.volumeInfo).length);
 
         //if volumeInfo IS part of the output object
         if (Object.keys(bookvalue.volumeInfo).length != 0) {
@@ -139,48 +143,7 @@ function callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey) {
         });
 };
 
-function getLocationZip(zipCodeApiUrl, zipCodeApiKey, userlat, userlong, userInputZip) {
-    var query = '';
-    var data;
-    query += zipCodeApiUrl;
-    query += zipCodeApiKey;
 
-    query += '/info.json/';
-    query += userInputZip;
-    query += '/degrees';
-    console.log(query);
-    var result = $.ajax({
-            /* update API end point */
-            //url: query,
-            url: 'https://www.zipcodeapi.com/rest/' + zipCodeApiKey + '/info.json/' + userInputZip + '/degrees',
-            //data: params,
-            dataType: "json",
-            /*set the call type GET / POST*/
-            type: "GET"
-        })
-        /* if the call is successful (status 200 OK) show results */
-        .done(function (data) {
-            console.log(data);
-            userlat = data.lat;
-            userlong = data.lng;
-            console.log(userlat, userlong);
-            //displayMeetup(result);
-            /* if the results are meeningful, we can just console.log them */
-        })
-        /* if the call is NOT successful show errors */
-        .fail(function (jqXHR, error, errorThrown) {
-            console.log(jqXHR);
-            console.log(error);
-            console.log(errorThrown);
-        });
-    /* $.getJSON(query, function (data) {
-         console.log(data);
-         userlat = data.lat;
-         userlong = data.lng;
-         console.log(userlat, userlong);
-     })*/
-
-}
 
 function callYouTube(subject, youTubeSearchApiUrl, myGoogleKey) {
     var query = {
@@ -198,9 +161,9 @@ function callMeetup(subject, meetUpApiUrl, myMeetUpKey) {
     var params = {
         sign: 'true',
         page: 9,
-        lat: userLat,
+        lat: userlat,
         topic: subject,
-        lon: userLong,
+        lon: userlong,
         key: myMeetUpKey
     };
 
@@ -226,39 +189,43 @@ function callMeetup(subject, meetUpApiUrl, myMeetUpKey) {
         });
 };
 
+function geoSuccess(position) {
+    console.log(position);
+    userlat = position.coords.latitude;
+    userlong = position.coords.longitude;
+    console.log(userlat, userlong);
+    callMeetup(subject, meetUpApiUrl, myMeetUpKey, userlat, userlong);
+}
 
+function geoFail() {
+    $('#meetUpResults').html('<h3>Sorry, your browser does not support HTML5, you selected to not allow the app to have your location, or the API timed out.  Meetup will not be able to return relevant events. </h3>');
+};
 /*Gets the user lat and long for the meetup API */
-navigator.geolocation.getCurrentPosition(function (position, userlat, userlong) {
-    userLat = position.coords.latitude;
-    userLong = position.coords.longitude;
-});
+
 
 /*Hides the output screens until the user selects one. */
 $('#bookResults').hide();
 $('#meetUpResults').hide();
-<<<<<<< HEAD
-//$('#zip').hide();
-=======
->>>>>>> parent of b9d400c... Added error handling for Geolocation
+
 
 /*Event handlers that displays the selected output screen and hides the others  */
 $('#youTube').click(function () {
     $('#youTubeResults').show();
     $('#bookResults').hide();
     $('#meetUpResults').hide();
-    //    $('#zip').hide();
+
 })
 $('#googleBooks').click(function () {
     $('#bookResults').show();
     $('#youTubeResults').hide();
     $('#meetUpResults').hide();
-    //   $('#zip').hide();
+
 })
 $('#meetUp').click(function () {
     $('#meetUpResults').show();
     $('#youTubeResults').hide();
     $('#bookResults').hide();
-    //  $('#zip').hide();
+
 });
 
 /* Event handler that gets the subject the user wants and calls the functions that contact the respective API */
@@ -266,25 +233,9 @@ $("#subButton").on("click", function (event, userLat, userLong) {
     subject = $('#menu').val();
     callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey);
     callYouTube(subject, youTubeSearchApiUrl, myGoogleKey);
-<<<<<<< HEAD
-    if ((userlat) && (userlong)) {
-        console.log(userLat);
-        callMeetup(subject, meetUpApiUrl, myMeetUpKey, userLat, userLong);
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoFail, options);
 
 
-    } else {
-        $('#zip').show();
-    };
+    // } else {
 
-=======
-    callMeetup(subject, meetUpApiUrl, myMeetUpKey, userLat, userLong);
->>>>>>> parent of b9d400c... Added error handling for Geolocation
-});
-$('#zipButton').on('click', function (subject, meetUpApiUrl, myMeetUpKey, userLat, userLong) {
-    var userInputZip = $('#zipcode').val();
-    console.log(userInputZip);
-    getLocationZip(zipCodeApiUrl, zipCodeApiKey, userlat, userlong, userInputZip);
-    //$('#zip').hide();
-
-    callMeetup(subject, meetUpApiUrl, myMeetUpKey, userLat, userLong);
 });
