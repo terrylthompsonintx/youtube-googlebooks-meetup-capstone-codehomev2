@@ -212,18 +212,21 @@ $('#meetUpResults').hide();
 
 /*Event handlers that displays the selected output screen and hides the others  */
 $('#youTube').click(function () {
+    $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from YouTube</h3>');
     $('#youTubeResults').show();
     $('#bookResults').hide();
     $('#meetUpResults').hide();
 
 })
 $('#googleBooks').click(function () {
+    $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from GoogleBooks</h3>');
     $('#bookResults').show();
     $('#youTubeResults').hide();
     $('#meetUpResults').hide();
 
 })
 $('#meetUp').click(function () {
+    $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from MeetUp</h3>');
     $('#meetUpResults').show();
     $('#youTubeResults').hide();
     $('#bookResults').hide();
@@ -233,6 +236,7 @@ $('#meetUp').click(function () {
 /* Event handler that gets the subject the user wants and calls the functions that contact the respective API */
 $("#subButton").on("click", function (event, userLat, userLong) {
     subject = $('#menu').val();
+    $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from YouTube</h3>');
     callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey);
     callYouTube(subject, youTubeSearchApiUrl, myGoogleKey);
     navigator.geolocation.getCurrentPosition(geoSuccess, geoFail, options);
