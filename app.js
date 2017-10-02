@@ -12,7 +12,7 @@ userlong = 0;
 var options = {
     enableHighAccuracy: true,
     timeout: 5000,
-    maximumAge: 3
+    maximumAge: 0
 };
 const youTubeSearchApiUrl = "https://www.googleapis.com/youtube/v3/search";
 const googleBooksApiUrl = 'https://www.googleapis.com/books/v1/volumes';
@@ -86,6 +86,7 @@ function displayGooglebooks(data) {
 };
 
 function displayMeetup(data) {
+    console.log(data);
     var meetUpHtml = '';
     if (data.code != 'no_topics') {
         $.each(data.results, function (key, value) {
@@ -194,7 +195,7 @@ function geoSuccess(position) {
     //console.log(position);
     userlat = position.coords.latitude;
     userlong = position.coords.longitude;
-    //console.log(userlat, userlong);
+    console.log(userlat, userlong);
     callMeetup(subject, meetUpApiUrl, myMeetUpKey, userlat, userlong);
 }
 //Fail of geolocation.
