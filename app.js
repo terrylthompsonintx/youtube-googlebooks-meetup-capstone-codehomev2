@@ -7,8 +7,8 @@ When the user selects a resource the program displays its html and hides the oth
 /*Program global variables   */
 
 var subject, userlat, userlong;
-userlat = 0;
-userlong = 0;
+userlat = 40.767361;
+userlong = -73.974173;
 var options = {
     enableHighAccuracy: true,
     timeout: 5000,
@@ -144,7 +144,9 @@ function callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey) {
         });
 };
 
-
+function noSelect() {
+    $('#selectInfo').html('<h3>Please select a topic and push "Go!"</h3>')
+}
 
 function callYouTube(subject, youTubeSearchApiUrl, myGoogleKey) {
     var query = {
@@ -203,6 +205,15 @@ function geoFail() {
     $('#meetUpResults').html('<h3>Sorry, your browser does not support HTML5, you selected to not allow the app to have your location, or the API timed out.  Meetup will not be able to return relevant events. </h3>');
 };
 
+function geoWait() {
+    $('#meetUpResults').html('<h3>Please select to Allow this application to know your location.  It is required for the MeetUp API.  </h3>');
+};
+
+$(document).ready(function () {
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoFail, options);
+    console.log("ready!");
+});
+
 
 
 /*Hides the output screens until the user selects one. */
@@ -212,25 +223,35 @@ $('#meetUpResults').hide();
 
 /*Event handlers that displays the selected output screen and hides the others  */
 $('#youTube').click(function () {
-    $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from YouTube</h3>');
-    $('#youTubeResults').show();
-    $('#bookResults').hide();
-    $('#meetUpResults').hide();
-
+    if (subject !== undefined) {
+        $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from YouTube</h3>');
+        $('#youTubeResults').show();
+        $('#bookResults').hide();
+        $('#meetUpResults').hide();
+    } else {
+        noSelect();
+    }
 })
 $('#googleBooks').click(function () {
-    $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from GoogleBooks</h3>');
-    $('#bookResults').show();
-    $('#youTubeResults').hide();
-    $('#meetUpResults').hide();
+    if (subject !== undefined) {
+        $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from GoogleBooks</h3>');
+        $('#bookResults').show();
+        $('#youTubeResults').hide();
+        $('#meetUpResults').hide();
+    } else {
+        noSelect();
+    }
 
 })
 $('#meetUp').click(function () {
-    $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from MeetUp</h3>');
-    $('#meetUpResults').show();
-    $('#youTubeResults').hide();
-    $('#bookResults').hide();
-
+    if (subject !== undefined) {
+        $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from MeetUp</h3>');
+        $('#meetUpResults').show();
+        $('#youTubeResults').hide();
+        $('#bookResults').hide();
+    } else {
+        noSelect();
+    }
 });
 
 /* Event handler that gets the subject the user wants and calls the functions that contact the respective API */
@@ -239,8 +260,12 @@ $("#subButton").on("click", function (event, userLat, userLong) {
     $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from YouTube</h3>');
     callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey);
     callYouTube(subject, youTubeSearchApiUrl, myGoogleKey);
-    navigator.geolocation.getCurrentPosition(geoSuccess, geoFail, options);
+    console.log(userlat, userlong);
+    if ((userlat === undefined) || (userlat === '') || (userlong === undefined) || (userlong === '')) {
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoFail, options);
 
-
+    } else {
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoWait, options);
+    }
 
 });
