@@ -256,6 +256,7 @@ $('#meetUp').click(function () {
 
 /* Event handler that gets the subject the user wants and calls the functions that contact the respective API */
 $("#subButton").on("click", function (event, userLat, userLong) {
+    $('#meetUpResults').html('<h3>Please select to Allow this application to know your location.  It is required for the MeetUp API.  </h3>');
     subject = $('#menu').val();
     $('#selectInfo').html('<h3>Displaying results for "' + subject + '" from YouTube</h3>');
     callGoogleBooks(subject, googleBooksApiUrl, myGoogleKey);
